@@ -153,8 +153,8 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread( new Runnable() {
             @Override
             public void run() {
-                locationTextView.setText( "Mississauga" );
                 getForecast( locations.getMississaugaLatitude(), locations.getMississaugaLongitude() );
+                locationTextView.setText( "Mississauga" );
             }
         } );
     }
@@ -163,8 +163,8 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread( new Runnable() {
             @Override
             public void run() {
-                locationTextView.setText( "Waterloo" );
                 getForecast(locations.getWaterlooLatitude(), locations.getWaterlooLongitude());
+                locationTextView.setText( "Waterloo" );
             }
         } );
     }
