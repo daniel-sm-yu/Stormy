@@ -1,14 +1,18 @@
 package com.dsyu.stormy;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.dsyu.stormy.databinding.ActivityMainBinding;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,16 +28,19 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
-
     private CurrentWeather currentWeather;
+
+    private ImageView iconImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_main );
+        final ActivityMainBinding binding = DataBindingUtil.setContentView( MainActivity.this, R.layout.activity_main );
 
         TextView darkSky = findViewById( R.id.darkSkyAttribution );
         darkSky.setMovementMethod( LinkMovementMethod.getInstance() );
+
+        iconImageView = findViewById( R.id.iconImageView );
 
         String apiKEY = "e17fcb932a85d49efc27e7e843e22a46";
 
@@ -63,6 +70,27 @@ public class MainActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
 
                             currentWeather = getCurrentDetails(jsonData);
+
+                            final CurrentWeather displayWeather = new CurrentWeather(
+                                    currentWeather.getLocationLabel(),
+                                    currentWeather.getIcon(),
+                                    currentWeather.getTime(),
+                                    currentWeather.getTemperature(),
+                                    currentWeather.getHumidity(),
+                                    currentWeather.getPrecipChance(),
+                                    currentWeather.getSummary(),
+                                    currentWeather.getTimeZone()
+                            );
+
+                            binding.setWeather( displayWeather );
+
+                            // runs the following code on the main thread, other threads can not change the UI
+                            runOnUiThread( new Runnable() {
+                                @Override
+                                public void run() {
+                                    iconImageView.setImageDrawable( getResources().getDrawable( displayWeather.getIconId() ) );
+                                }
+                            } );
 
                         } else {
                             alertUserAboutError();
