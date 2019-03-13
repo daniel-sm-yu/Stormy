@@ -1,8 +1,17 @@
 package com.dsyu.stormy;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -16,10 +25,15 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
+    private CurrentWeather currentWeather;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
+
+        TextView darkSky = findViewById( R.id.darkSkyAttribution );
+        darkSky.setMovementMethod( LinkMovementMethod.getInstance() );
 
         String apiKEY = "e17fcb932a85d49efc27e7e843e22a46";
 
@@ -28,36 +42,77 @@ public class MainActivity extends AppCompatActivity {
 
         String forecastURL = "https://api.darksky.net/forecast/" + apiKEY + "/" + latitude + "," + longitude;
 
-        OkHttpClient client = new OkHttpClient();
+        if (isNetworkAvailable()) {
 
-        Request request = new Request.Builder().url(forecastURL).build();
+            OkHttpClient client = new OkHttpClient();
 
-        Call call = client.newCall( request );
-        call.enqueue( new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
+            Request request = new Request.Builder().url( forecastURL ).build();
 
-            }
+            Call call = client.newCall( request );
+            call.enqueue( new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                try {
-                    Log.v(TAG, response.body().string());
-                    if (response.isSuccessful()) {
-
-                    }
-                    else {
-                        alertUserAboutError();
-                    }
-                } catch (IOException e) {
-                    Log.e(TAG, "IO Exception caught", e);
                 }
 
-            }
-        } );
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    try {
+                        String jsonData = response.body().string();
+                        Log.v( TAG, jsonData );
+                        if (response.isSuccessful()) {
 
+                            currentWeather = getCurrentDetails(jsonData);
 
+                        } else {
+                            alertUserAboutError();
+                        }
+                    } catch (IOException e) {
+                        Log.e( TAG, "IO Exception caught", e );
+                    } catch (JSONException e) {
+                        Log.e( TAG, "JSON Exception caught", e );
+                    }
 
+                }
+            } );
+        }
+        Log.d(TAG, "Main UI code is running.");
+    }
+
+    private CurrentWeather getCurrentDetails(String jsonData) throws JSONException {
+        JSONObject forecast = new JSONObject( jsonData );
+
+        String timezone = forecast.getString( "timezone" );
+
+        JSONObject currently = forecast.getJSONObject( "currently" );
+
+        CurrentWeather currentWeather = new CurrentWeather();
+
+        currentWeather.setHumidity( currently.getDouble( "humidity" ) );
+        currentWeather.setTime( currently.getLong( "time" ) );
+        currentWeather.setIcon( currently.getString( "icon" ) );
+        currentWeather.setLocationLabel( "Wonderland" );
+        currentWeather.setPrecipChance( currently.getDouble( "precipProbability" ) );
+        currentWeather.setSummary( currently.getString( "summary" ) );
+        currentWeather.setTemperature( currently.getDouble( "temperature" ) );
+        currentWeather.setTimeZone(timezone);
+
+        return currentWeather;
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager manager = (ConnectivityManager) getSystemService( Context.CONNECTIVITY_SERVICE );
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+
+        boolean isAvailable = false;
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            isAvailable = true;
+        }
+        else {
+            Toast.makeText( this, getString( R.string.network_unavailable_message), Toast.LENGTH_LONG).show();
+        }
+        return isAvailable;
     }
 
     private void alertUserAboutError() {
