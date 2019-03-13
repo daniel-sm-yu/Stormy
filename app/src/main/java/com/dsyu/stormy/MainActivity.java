@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,10 +32,17 @@ public class MainActivity extends AppCompatActivity {
     private CurrentWeather currentWeather;
 
     private ImageView iconImageView;
+    final double latitude = 43.4643;
+    final double longitude = -80.5204;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
+        getForecast(latitude, longitude);
+    }
+
+    private void getForecast(double latitude, double longitude) {
         final ActivityMainBinding binding = DataBindingUtil.setContentView( MainActivity.this, R.layout.activity_main );
 
         TextView darkSky = findViewById( R.id.darkSkyAttribution );
@@ -43,9 +51,6 @@ public class MainActivity extends AppCompatActivity {
         iconImageView = findViewById( R.id.iconImageView );
 
         String apiKEY = "e17fcb932a85d49efc27e7e843e22a46";
-
-        double latitude = 37.8267;
-        double longitude = -122.4233;
 
         String forecastURL = "https://api.darksky.net/forecast/" + apiKEY + "/" + latitude + "," + longitude;
 
@@ -66,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(Call call, Response response) throws IOException {
                     try {
                         String jsonData = response.body().string();
-                        Log.v( TAG, jsonData );
                         if (response.isSuccessful()) {
 
                             currentWeather = getCurrentDetails(jsonData);
@@ -104,26 +108,23 @@ public class MainActivity extends AppCompatActivity {
                 }
             } );
         }
-        Log.d(TAG, "Main UI code is running.");
     }
 
     private CurrentWeather getCurrentDetails(String jsonData) throws JSONException {
         JSONObject forecast = new JSONObject( jsonData );
 
-        String timezone = forecast.getString( "timezone" );
-
         JSONObject currently = forecast.getJSONObject( "currently" );
 
         CurrentWeather currentWeather = new CurrentWeather();
 
+        currentWeather.setTimeZone(forecast.getString( "timezone" ));
         currentWeather.setHumidity( currently.getDouble( "humidity" ) );
         currentWeather.setTime( currently.getLong( "time" ) );
         currentWeather.setIcon( currently.getString( "icon" ) );
-        currentWeather.setLocationLabel( "Wonderland" );
+        currentWeather.setLocationLabel( "Waterloo" );
         currentWeather.setPrecipChance( currently.getDouble( "precipProbability" ) );
         currentWeather.setSummary( currently.getString( "summary" ) );
         currentWeather.setTemperature( currently.getDouble( "temperature" ) );
-        currentWeather.setTimeZone(timezone);
 
         return currentWeather;
     }
@@ -146,5 +147,10 @@ public class MainActivity extends AppCompatActivity {
     private void alertUserAboutError() {
         AlertDialogFragment dialog = new AlertDialogFragment();
         dialog.show(getSupportFragmentManager(), "error_dialog");
+    }
+
+    public void refreshOnClick(View view) {
+        Toast.makeText( this, "Updating Weather Data", Toast.LENGTH_SHORT ).show();
+        getForecast( latitude, longitude );
     }
 }

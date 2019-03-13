@@ -18,7 +18,7 @@
         android:id="@+id/temperatureValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@{String.valueOf(Math.round(weather.temperature)), default=`24`}"
+        android:text="@{String.valueOf(Math.round((weather.temperature - 32) * 5 / 9)), default=`32`}"
         android:textColor="@android:color/white"
         android:textSize="150sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -44,7 +44,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="@{`At ` + String.valueOf(weather.formattedTime) + ` it will be`, default=`At 9:00 AM it will be`}"
+        android:text="@{`At ` + String.valueOf(weather.formattedTime) + ` it will be`, default=`At 9:00 a.m. it will be`}"
         android:textColor="@color/half_white"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/temperatureValue"
@@ -58,7 +58,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="24dp"
-        android:text="Wonderland"
+        android:text="Waterloo"
         android:textColor="@android:color/white"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/timeValue"
@@ -78,7 +78,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.8"
-        app:srcCompat="@drawable/cloudy_night" />
+        app:srcCompat="@drawable/clear_day" />
 
     <TextView
         android:id="@+id/humidityLabel"
@@ -182,6 +182,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
+        android:onClick="refreshOnClick"
         app:layout_constraintBottom_toTopOf="@+id/darkSkyAttribution"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
