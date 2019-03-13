@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,16 +31,17 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
     private CurrentWeather currentWeather;
+    private Locations locations = new Locations();
 
     private ImageView iconImageView;
-    final double latitude = 43.4643;
-    final double longitude = -80.5204;
-
+    private TextView locationTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        getForecast(latitude, longitude);
+        getForecast(locations.getMississaugaLatitude(), locations.getMississaugaLongitude());
+
+        locationTextView = findViewById( R.id.locationValue );
     }
 
     private void getForecast(double latitude, double longitude) {
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         iconImageView = findViewById( R.id.iconImageView );
 
-        String apiKEY = "e17fcb932a85d49efc27e7e843e22a46";
+        String apiKEY = "9f1b5bba01b440c97205eb1ec559be48";
 
         String forecastURL = "https://api.darksky.net/forecast/" + apiKEY + "/" + latitude + "," + longitude;
 
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             call.enqueue( new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-
+                    Toast.makeText( MainActivity.this, "Something went wrong, try again.", Toast.LENGTH_SHORT ).show();
                 }
 
                 @Override
@@ -76,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
                             currentWeather = getCurrentDetails(jsonData);
 
                             final CurrentWeather displayWeather = new CurrentWeather(
-                                    currentWeather.getLocationLabel(),
                                     currentWeather.getIcon(),
                                     currentWeather.getTime(),
                                     currentWeather.getTemperature(),
@@ -121,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
         currentWeather.setHumidity( currently.getDouble( "humidity" ) );
         currentWeather.setTime( currently.getLong( "time" ) );
         currentWeather.setIcon( currently.getString( "icon" ) );
-        currentWeather.setLocationLabel( "Waterloo" );
         currentWeather.setPrecipChance( currently.getDouble( "precipProbability" ) );
         currentWeather.setSummary( currently.getString( "summary" ) );
         currentWeather.setTemperature( currently.getDouble( "temperature" ) );
@@ -149,8 +149,63 @@ public class MainActivity extends AppCompatActivity {
         dialog.show(getSupportFragmentManager(), "error_dialog");
     }
 
-    public void refreshOnClick(View view) {
-        Toast.makeText( this, "Updating Weather Data", Toast.LENGTH_SHORT ).show();
-        getForecast( latitude, longitude );
+    public void mississauga(View view) {
+        runOnUiThread( new Runnable() {
+            @Override
+            public void run() {
+                locationTextView.setText( "Mississauga" );
+                getForecast( locations.getMississaugaLatitude(), locations.getMississaugaLongitude() );
+            }
+        } );
+    }
+
+    public void waterloo(View view) {
+        runOnUiThread( new Runnable() {
+            @Override
+            public void run() {
+                locationTextView.setText( "Waterloo" );
+                getForecast(locations.getWaterlooLatitude(), locations.getWaterlooLongitude());
+            }
+        } );
+    }
+
+    public void ottawa(View view) {
+        runOnUiThread( new Runnable() {
+            @Override
+            public void run() {
+                locationTextView.setText( "Ottawa" );
+                getForecast(locations.getOttawaLatitude(), locations.getOttawaLongitude());
+            }
+        } );
+    }
+
+    public void montreal(View view) {
+        runOnUiThread( new Runnable() {
+            @Override
+            public void run() {
+                locationTextView.setText( "Montreal" );
+                getForecast( locations.getMontrealLatitude(), locations.getMontrealLongitude() );
+            }
+        } );
+    }
+
+    public void losAngeles(View view) {
+        runOnUiThread( new Runnable() {
+            @Override
+            public void run() {
+                locationTextView.setText( "Los Angeles" );
+                getForecast(locations.getLosAngelesLatitude(), locations.getLosAngelesLongitude());
+            }
+        } );
+    }
+
+    public void dalian(View view) {
+        runOnUiThread( new Runnable() {
+            @Override
+            public void run() {
+                locationTextView.setText( "Dalian" );
+                getForecast(locations.getDalianLatitude(), locations.getDalianLongitude());
+            }
+        } );
     }
 }
