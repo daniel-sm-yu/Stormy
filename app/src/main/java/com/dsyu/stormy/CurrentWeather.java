@@ -9,11 +9,13 @@ public class CurrentWeather {
     private String location;
     private String icon;
     private long time;
+    private long sunRiseTime;
+    private long sunSetTime;
     private double temperature;
     private double humidity;
     private double precipChance;
     private String summary;
-    private  String timeZone;
+    private String timeZone;
 
     public String getLocation() { return location; }
 
@@ -27,9 +29,11 @@ public class CurrentWeather {
         this.icon = icon;
     }
 
-    public CurrentWeather(String icon, long time, double temperature, double humidity, double precipChance, String summary, String timeZone) {
+    public CurrentWeather(String icon, long time, long sunRiseTime, long sunSetTime, double temperature, double humidity, double precipChance, String summary, String timeZone) {
         this.icon = icon;
         this.time = time;
+        this.sunRiseTime = sunRiseTime;
+        this.sunSetTime =sunSetTime;
         this.temperature = (temperature - 32) * 5 / 9;
         this.humidity = humidity;
         this.precipChance = precipChance;
@@ -86,11 +90,20 @@ public class CurrentWeather {
         return formatter.format( dateTime );
     }
 
-    public Integer getHour() {
-        SimpleDateFormat formatter = new SimpleDateFormat( "kk" );
-        formatter.setTimeZone( TimeZone.getTimeZone( timeZone ) );
-        Date dateTime = new Date(time * 1000);
-        return Integer.valueOf( formatter.format( dateTime ) );
+    public long getSunRiseTime() {
+        return sunRiseTime;
+    }
+
+    public void setSunRiseTime(long sunRiseTime) {
+        this.sunRiseTime = sunRiseTime;
+    }
+
+    public long getSunSetTime() {
+        return sunSetTime;
+    }
+
+    public void setSunSetTime(long sunSetTime) {
+        this.sunSetTime = sunSetTime;
     }
 
     public void setTime(long time) {

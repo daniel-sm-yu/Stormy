@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.dsyu.stormy.databinding.ActivityMainBinding;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -118,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
                             final CurrentWeather displayWeather = new CurrentWeather(
                                     currentWeather.getIcon(),
                                     currentWeather.getTime(),
+                                    currentWeather.getSunRiseTime(),
+                                    currentWeather.getSunSetTime(),
                                     currentWeather.getTemperature(),
                                     currentWeather.getHumidity(),
                                     currentWeather.getPrecipChance(),
@@ -160,16 +163,27 @@ public class MainActivity extends AppCompatActivity {
         JSONObject forecast = new JSONObject( jsonData );
 
         JSONObject currently = forecast.getJSONObject( "currently" );
+        JSONObject hourly = forecast.getJSONObject( "hourly" );
+        JSONObject dailyData = forecast.getJSONObject( "daily" ).getJSONArray( "data" ).getJSONObject( 0 );
 
         CurrentWeather currentWeather = new CurrentWeather();
 
         currentWeather.setTimeZone(forecast.getString( "timezone" ));
         currentWeather.setHumidity( currently.getDouble( "humidity" ) );
         currentWeather.setTime( currently.getLong( "time" ) );
+        currentWeather.setSunRiseTime( dailyData.getLong( "sunriseTime" ) );
+        currentWeather.setSunSetTime( dailyData.getLong( "sunsetTime" ) );
         currentWeather.setIcon( currently.getString( "icon" ) );
         currentWeather.setPrecipChance( currently.getDouble( "precipProbability" ) );
-        currentWeather.setSummary( currently.getString( "summary" ) );
         currentWeather.setTemperature( currently.getDouble( "temperature" ) );
+
+        if (forecast.has( "minutely" )) {
+            JSONObject minutely = forecast.getJSONObject( "minutely" );
+            currentWeather.setSummary( minutely.getString( "summary" ) );
+        }
+        else {
+            currentWeather.setSummary( hourly.getString( "summary" ) );
+        }
 
         return currentWeather;
     }
@@ -195,10 +209,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setWeatherColor() {
-        if (currentWeather.getHour() < 7 || currentWeather.getHour() > 18) {
+        if (currentWeather.getIcon().equals( "clear-day" )) {
             changeColors( getResources().getColor( R.color.night ) );
         }
-        else if (currentWeather.getIcon().equals("clear-day") || currentWeather.getIcon().equals("clear-night") || currentWeather.getIcon().equals("wind")) {
+        else if (currentWeather.getIcon().equals("clear-day") || currentWeather.getIcon().equals("wind")) {
             changeColors( getResources().getColor( R.color.clear ) );
         }
         else {
@@ -268,6 +282,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 getForecast(locations.getDalianLatitude(), locations.getDalianLongitude(), "Dalian");
+                Log.e(TAG, "DALIANNNNN");
             }
         } );
     }
