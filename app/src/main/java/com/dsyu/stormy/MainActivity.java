@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         precipitationTextView.setVisibility( View.INVISIBLE );
         getWindow().setStatusBarColor( getResources().getColor( R.color.black ) );
 
-        String apiKEY = "9f1b5bba01b440c97205eb1ec559be48";
+        String apiKEY = "f5826972faf15ce3b0d0fb1101ac945c";
 
         String forecastURL = "https://api.darksky.net/forecast/" + apiKEY + "/" + latitude + "," + longitude;
 
