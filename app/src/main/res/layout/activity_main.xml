@@ -133,11 +133,11 @@
 
         <TextView
             android:id="@+id/summaryValue"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="75dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="75dp"
+            android:layout_marginEnd="32dp"
             android:layout_marginBottom="8dp"
             android:gravity="center"
             android:text="@{weather.summary, default=`Stormy`}"
@@ -197,6 +197,7 @@
             android:layout_marginEnd="4dp"
             android:onClick="ottawa"
             android:text="Ottawa"
+            android:textColorLink="@android:color/white"
             android:theme="@style/ButtonTheme"
             app:layout_constraintBottom_toTopOf="@+id/dalianButton"
             app:layout_constraintEnd_toEndOf="parent"
