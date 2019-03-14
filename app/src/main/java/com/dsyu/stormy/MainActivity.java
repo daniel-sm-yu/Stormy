@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mississaugaButton;
     private Button waterlooButton;
     private Button ottawaButton;
-    private Button montrealButton;
+    private Button tokyoButton;
     private Button losAngelesButton;
     private Button dalianButton;
 
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         mississaugaButton = findViewById( R.id.mississaugaButton );
         waterlooButton = findViewById( R.id.waterlooButton );
         ottawaButton = findViewById( R.id.ottawaButton );
-        montrealButton = findViewById( R.id.montrealButton );
+        tokyoButton = findViewById( R.id.tokyoButton );
         losAngelesButton = findViewById( R.id.losAngelesButton );
         dalianButton = findViewById( R.id.dalianButton );
 
@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
         mississaugaButton.setTextColor( color );
         waterlooButton.setTextColor( color );
         ottawaButton.setTextColor( color );
-        montrealButton.setTextColor( color );
+        tokyoButton.setTextColor( color );
         losAngelesButton.setTextColor( color );
         dalianButton.setTextColor( color );
         getWindow().setStatusBarColor( color );
@@ -245,11 +245,11 @@ public class MainActivity extends AppCompatActivity {
         } );
     }
 
-    public void montreal(View view) {
+    public void tokyo(View view) {
         runOnUiThread( new Runnable() {
             @Override
             public void run() {
-                getForecast( locations.getMontrealLatitude(), locations.getMontrealLongitude(), "Montreal");
+                getForecast( locations.getTokyoLatitude(), locations.getTokyoLongitude(), "Tokyo");
             }
         } );
     }

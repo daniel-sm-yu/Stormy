@@ -8,8 +8,8 @@ public class Locations {
     private final double waterlooLongitude = -80.5204;
     private final double ottawaLatitude = 45.4215;
     private final double ottawaLongitude = -75.6972;
-    private final double montrealLatitude = 45.5017;
-    private final double montrealLongitude = -73.5673;
+    private final double tokyoLatitude = 35.6895;
+    private final double tokyoLongitude = 139.6917;
     private final double losAngelesLatitude = 34.0522;
     private final double losAngelesLongitude = -118.2437;
     private final double dalianLatitude = 38.9140;
@@ -39,12 +39,12 @@ public class Locations {
         return ottawaLongitude;
     }
 
-    public double getMontrealLatitude() {
-        return montrealLatitude;
+    public double getTokyoLatitude() {
+        return tokyoLatitude;
     }
 
-    public double getMontrealLongitude() {
-        return montrealLongitude;
+    public double getTokyoLongitude() {
+        return tokyoLongitude;
     }
 
     public double getLosAngelesLatitude() {

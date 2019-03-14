@@ -172,7 +172,7 @@
             android:onClick="mississauga"
             android:text="Mississauga"
             android:theme="@style/ButtonTheme"
-            app:layout_constraintBottom_toTopOf="@+id/montrealButton"
+            app:layout_constraintBottom_toTopOf="@+id/tokyoButton"
             app:layout_constraintEnd_toStartOf="@+id/losAngelesButton"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -206,12 +206,12 @@
             app:layout_constraintTop_toTopOf="@+id/waterlooButton" />
 
         <Button
-            android:id="@+id/montrealButton"
+            android:id="@+id/tokyoButton"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginStart="4dp"
-            android:onClick="montreal"
-            android:text="Montreal"
+            android:onClick="tokyo"
+            android:text="Tokyo"
             android:theme="@style/ButtonTheme"
             app:layout_constraintBottom_toBottomOf="@+id/losAngelesButton"
             app:layout_constraintEnd_toStartOf="@+id/waterlooButton"
@@ -230,7 +230,7 @@
             android:theme="@style/ButtonTheme"
             app:layout_constraintBottom_toTopOf="@+id/darkSkyAttribution"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintStart_toEndOf="@+id/montrealButton"
+            app:layout_constraintStart_toEndOf="@+id/tokyoButton"
             app:layout_constraintStart_toStartOf="@+id/guideline" />
 
         <Button
