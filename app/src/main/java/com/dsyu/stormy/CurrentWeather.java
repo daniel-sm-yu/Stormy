@@ -12,7 +12,7 @@ public class CurrentWeather {
     private long sunRiseTime;
     private long sunSetTime;
     private double temperature;
-    private double humidity;
+    private int uvIndex;
     private double precipChance;
     private String summary;
     private String timeZone;
@@ -29,13 +29,13 @@ public class CurrentWeather {
         this.icon = icon;
     }
 
-    public CurrentWeather(String icon, long time, long sunRiseTime, long sunSetTime, double temperature, double humidity, double precipChance, String summary, String timeZone) {
+    public CurrentWeather(String icon, long time, long sunRiseTime, long sunSetTime, double temperature, int uvIndex, double precipChance, String summary, String timeZone) {
         this.icon = icon;
         this.time = time;
         this.sunRiseTime = sunRiseTime;
         this.sunSetTime =sunSetTime;
         this.temperature = (temperature - 32) * 5 / 9;
-        this.humidity = humidity;
+        this.uvIndex = uvIndex;
         this.precipChance = precipChance;
         this.summary = summary;
         this.timeZone = timeZone;
@@ -118,12 +118,12 @@ public class CurrentWeather {
         this.temperature = temperature;
     }
 
-    public double getHumidity() {
-        return humidity;
+    public int getUvIndex() {
+        return uvIndex;
     }
 
-    public void setHumidity(double humidity) {
-        this.humidity = humidity;
+    public void setUvIndex(int uvIndex) {
+        this.uvIndex = uvIndex;
     }
 
     public double getPrecipChance() {

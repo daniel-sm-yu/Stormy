@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView locationTextView;
     private TextView timeTextView;
     private TextView temperatureValue;
-    private TextView humidityLabel;
-    private TextView humidityValue;
+    private TextView uvIndexLabel;
+    private TextView uvIndexValue;
     private TextView precipitationLabel;
     private TextView precipitationValue;
     private Button mississaugaButton;
@@ -74,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
         degreeImageView = findViewById( R.id.degreeImageView );
         timeTextView = findViewById( R.id.timeValue );
         temperatureValue = findViewById( R.id.temperatureValue );
-        humidityLabel = findViewById( R.id.humidityLabel );
-        humidityValue = findViewById( R.id.humidityValue );
+        uvIndexLabel = findViewById( R.id.uvIndexLabel );
+        uvIndexValue = findViewById( R.id.uvIndexValue );
         precipitationLabel = findViewById( R.id.precipLabel );
         precipitationValue = findViewById( R.id.precipValue);
         mississaugaButton = findViewById( R.id.mississaugaButton );
@@ -89,8 +89,8 @@ public class MainActivity extends AppCompatActivity {
         degreeImageView.setVisibility( View.INVISIBLE );
         timeTextView.setVisibility( View.INVISIBLE );
         temperatureValue.setVisibility( View.INVISIBLE );
-        humidityLabel.setVisibility( View.INVISIBLE );
-        humidityValue.setVisibility( View.INVISIBLE );
+        uvIndexLabel.setVisibility( View.INVISIBLE );
+        uvIndexValue.setVisibility( View.INVISIBLE );
         precipitationLabel.setVisibility( View.INVISIBLE );
         precipitationValue.setVisibility( View.INVISIBLE );
         getWindow().setStatusBarColor( getResources().getColor( R.color.black ) );
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                                     currentWeather.getSunRiseTime(),
                                     currentWeather.getSunSetTime(),
                                     currentWeather.getTemperature(),
-                                    currentWeather.getHumidity(),
+                                    currentWeather.getUvIndex(),
                                     currentWeather.getPrecipChance(),
                                     currentWeather.getSummary(),
                                     currentWeather.getTimeZone()
@@ -143,8 +143,8 @@ public class MainActivity extends AppCompatActivity {
                                     degreeImageView.setVisibility( View.VISIBLE );
                                     timeTextView.setVisibility( View.VISIBLE );
                                     temperatureValue.setVisibility( View.VISIBLE );
-                                    humidityLabel.setVisibility( View.VISIBLE );
-                                    humidityValue.setVisibility( View.VISIBLE );
+                                    uvIndexLabel.setVisibility( View.VISIBLE );
+                                    uvIndexValue.setVisibility( View.VISIBLE );
                                     precipitationLabel.setVisibility( View.VISIBLE );
                                     precipitationValue.setVisibility( View.VISIBLE );
                                     setWeatherColor();
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         CurrentWeather currentWeather = new CurrentWeather();
 
         currentWeather.setTimeZone(forecast.getString( "timezone" ));
-        currentWeather.setHumidity( currently.getDouble( "humidity" ) );
+        currentWeather.setUvIndex( currently.getInt( "uvIndex" ) );
         currentWeather.setTime( currently.getLong( "time" ) );
         currentWeather.setSunRiseTime( dailyData.getLong( "sunriseTime" ) );
         currentWeather.setSunSetTime( dailyData.getLong( "sunsetTime" ) );
