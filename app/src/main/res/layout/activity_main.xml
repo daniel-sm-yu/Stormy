@@ -224,6 +224,7 @@
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginStart="2dp"
+            android:layout_marginBottom="2dp"
             android:onClick="losAngeles"
             android:text="Los Angeles"
             android:theme="@style/ButtonTheme"
