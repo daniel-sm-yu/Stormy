@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         precipitationValue.setVisibility( View.INVISIBLE );
         getWindow().setStatusBarColor( getResources().getColor( R.color.black ) );
 
-        String apiKEY = "f5826972faf15ce3b0d0fb1101ac945c";
+        String apiKEY = "9f1b5bba01b440c97205eb1ec559be48";
 
         String forecastURL = "https://api.darksky.net/forecast/" + apiKEY + "/" + latitude + "," + longitude;
 
@@ -182,12 +182,14 @@ public class MainActivity extends AppCompatActivity {
         currentWeather.setPrecipChance( currently.getDouble( "precipProbability" ) );
         currentWeather.setTemperature( currently.getDouble( "temperature" ) );
 
-        if (forecast.has( "minutely" )) {
+        // Gets minutely summary for Canadian cities and hourly summary for other cities
+        if (forecast.has( "minutely" ) && forecast.getDouble( "latitude" ) != 34.0522) {
             JSONObject minutely = forecast.getJSONObject( "minutely" );
             currentWeather.setSummary( minutely.getString( "summary" ) );
         }
         else {
-            currentWeather.setSummary( currently.getString( "summary" ) );
+            JSONObject hourlyData = forecast.getJSONObject( "hourly" );
+            currentWeather.setSummary( hourlyData.getString( "summary" ) );
         }
         return currentWeather;
     }
