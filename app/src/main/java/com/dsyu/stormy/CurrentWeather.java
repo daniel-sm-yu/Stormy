@@ -9,6 +9,8 @@ import java.util.TimeZone;
 import static com.dsyu.stormy.MainActivity.TAG;
 
 public class CurrentWeather {
+
+    private String location;
     private String icon;
     private long time;
     private double temperature;
@@ -16,6 +18,10 @@ public class CurrentWeather {
     private double precipChance;
     private String summary;
     private  String timeZone;
+
+    public String getLocation() { return location; }
+
+    public void setLocation(String location) { this.location = location; }
 
     public String getIcon() {
         return icon;
@@ -28,7 +34,7 @@ public class CurrentWeather {
     public CurrentWeather(String icon, long time, double temperature, double humidity, double precipChance, String summary, String timeZone) {
         this.icon = icon;
         this.time = time;
-        this.temperature = temperature;
+        this.temperature = (temperature - 32) * 5 / 9;
         this.humidity = humidity;
         this.precipChance = precipChance;
         this.summary = summary;

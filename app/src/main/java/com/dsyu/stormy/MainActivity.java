@@ -35,22 +35,35 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageView iconImageView;
     private TextView locationTextView;
+    private TextView timeTextView;
+    private TextView temperatureTextView;
+    private TextView humidityTextView;
+    private TextView precipitationTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        getForecast(locations.getMississaugaLatitude(), locations.getMississaugaLongitude());
-
-        locationTextView = findViewById( R.id.locationValue );
+        getForecast(locations.getMississaugaLatitude(), locations.getMississaugaLongitude(), "Mississauga");
     }
 
-    private void getForecast(double latitude, double longitude) {
+    private void getForecast(double latitude, double longitude, final String city) {
         final ActivityMainBinding binding = DataBindingUtil.setContentView( MainActivity.this, R.layout.activity_main );
 
         TextView darkSky = findViewById( R.id.darkSkyAttribution );
         darkSky.setMovementMethod( LinkMovementMethod.getInstance() );
 
+        locationTextView = findViewById( R.id.locationTextView );
         iconImageView = findViewById( R.id.iconImageView );
+        timeTextView = findViewById( R.id.timeValue );
+        temperatureTextView = findViewById( R.id.temperatureValue );
+        humidityTextView = findViewById( R.id.humidityValue );
+        precipitationTextView = findViewById( R.id.precipValue);
+
+        timeTextView.setVisibility( View.INVISIBLE );
+        temperatureTextView.setVisibility( View.INVISIBLE );
+        humidityTextView.setVisibility( View.INVISIBLE );
+        precipitationTextView.setVisibility( View.INVISIBLE );
+
 
         String apiKEY = "9f1b5bba01b440c97205eb1ec559be48";
 
@@ -93,7 +106,12 @@ public class MainActivity extends AppCompatActivity {
                             runOnUiThread( new Runnable() {
                                 @Override
                                 public void run() {
+                                    locationTextView.setText( city );
                                     iconImageView.setImageDrawable( getResources().getDrawable( displayWeather.getIconId() ) );
+                                    timeTextView.setVisibility( View.VISIBLE );
+                                    temperatureTextView.setVisibility( View.VISIBLE );
+                                    humidityTextView.setVisibility( View.VISIBLE );
+                                    precipitationTextView.setVisibility( View.VISIBLE );
                                 }
                             } );
 
@@ -153,8 +171,7 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread( new Runnable() {
             @Override
             public void run() {
-                getForecast( locations.getMississaugaLatitude(), locations.getMississaugaLongitude() );
-                locationTextView.setText( "Mississauga" );
+                getForecast( locations.getMississaugaLatitude(), locations.getMississaugaLongitude(), "Mississauga");
             }
         } );
     }
@@ -163,8 +180,7 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread( new Runnable() {
             @Override
             public void run() {
-                getForecast(locations.getWaterlooLatitude(), locations.getWaterlooLongitude());
-                locationTextView.setText( "Waterloo" );
+                getForecast(locations.getWaterlooLatitude(), locations.getWaterlooLongitude(), "Waterloo");
             }
         } );
     }
@@ -173,8 +189,7 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread( new Runnable() {
             @Override
             public void run() {
-                locationTextView.setText( "Ottawa" );
-                getForecast(locations.getOttawaLatitude(), locations.getOttawaLongitude());
+                getForecast(locations.getOttawaLatitude(), locations.getOttawaLongitude(), "Ottawa");
             }
         } );
     }
@@ -183,8 +198,7 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread( new Runnable() {
             @Override
             public void run() {
-                locationTextView.setText( "Montreal" );
-                getForecast( locations.getMontrealLatitude(), locations.getMontrealLongitude() );
+                getForecast( locations.getMontrealLatitude(), locations.getMontrealLongitude(), "Montreal");
             }
         } );
     }
@@ -193,8 +207,7 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread( new Runnable() {
             @Override
             public void run() {
-                locationTextView.setText( "Los Angeles" );
-                getForecast(locations.getLosAngelesLatitude(), locations.getLosAngelesLongitude());
+                getForecast(locations.getLosAngelesLatitude(), locations.getLosAngelesLongitude(), "Los Angeles");
             }
         } );
     }
@@ -203,8 +216,7 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread( new Runnable() {
             @Override
             public void run() {
-                locationTextView.setText( "Dalian" );
-                getForecast(locations.getDalianLatitude(), locations.getDalianLongitude());
+                getForecast(locations.getDalianLatitude(), locations.getDalianLongitude(), "Dalian");
             }
         } );
     }
