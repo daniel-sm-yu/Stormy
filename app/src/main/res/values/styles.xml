@@ -6,4 +6,8 @@
         <item name="colorPrimaryDark">@color/black</item>
     </style>
 
+    <style name="ButtonTheme">
+        <item name="android:textSize">12sp</item>
+    </style>
+
 </resources>

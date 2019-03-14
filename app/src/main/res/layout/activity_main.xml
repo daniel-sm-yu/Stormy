@@ -171,9 +171,9 @@
             android:layout_marginStart="4dp"
             android:onClick="mississauga"
             android:text="Mississauga"
-            android:textSize="12sp"
+            android:theme="@style/ButtonTheme"
             app:layout_constraintBottom_toTopOf="@+id/montrealButton"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintEnd_toStartOf="@+id/losAngelesButton"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/waterlooButton" />
@@ -183,13 +183,13 @@
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginStart="2dp"
-            android:layout_marginEnd="2dp"
             android:onClick="waterloo"
             android:text="Waterloo"
-            android:textSize="12sp"
+            android:theme="@style/ButtonTheme"
             app:layout_constraintBottom_toTopOf="@+id/losAngelesButton"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintStart_toEndOf="@+id/mississaugaButton" />
+            app:layout_constraintStart_toEndOf="@+id/mississaugaButton"
+            app:layout_constraintStart_toStartOf="@+id/guideline" />
 
         <Button
             android:id="@+id/ottawaButton"
@@ -198,7 +198,7 @@
             android:layout_marginEnd="4dp"
             android:onClick="ottawa"
             android:text="Ottawa"
-            android:textSize="12sp"
+            android:theme="@style/ButtonTheme"
             app:layout_constraintBottom_toTopOf="@+id/dalianButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -212,25 +212,25 @@
             android:layout_marginStart="4dp"
             android:onClick="montreal"
             android:text="Montreal"
-            android:textSize="12sp"
+            android:theme="@style/ButtonTheme"
             app:layout_constraintBottom_toBottomOf="@+id/losAngelesButton"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintEnd_toStartOf="@+id/waterlooButton"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mississaugaButton" />
 
         <Button
             android:id="@+id/losAngelesButton"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginStart="2dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginBottom="5dp"
             android:onClick="losAngeles"
             android:text="Los Angeles"
-            android:textSize="12sp"
+            android:theme="@style/ButtonTheme"
             app:layout_constraintBottom_toTopOf="@+id/darkSkyAttribution"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintStart_toEndOf="@+id/montrealButton" />
+            app:layout_constraintStart_toEndOf="@+id/montrealButton"
+            app:layout_constraintStart_toStartOf="@+id/guideline" />
 
         <Button
             android:id="@+id/dalianButton"
@@ -239,11 +239,11 @@
             android:layout_marginEnd="4dp"
             android:onClick="dalian"
             android:text="Dalian"
-            android:textSize="12sp"
+            android:theme="@style/ButtonTheme"
             app:layout_constraintBottom_toBottomOf="@+id/losAngelesButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/losAngelesButton" />
+            app:layout_constraintStart_toStartOf="@+id/ottawaButton" />
 
         <TextView
             android:id="@+id/darkSkyAttribution"
