@@ -3,7 +3,6 @@ package com.dsyu.stormy;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -20,7 +19,6 @@ import android.widget.Toast;
 
 import com.dsyu.stormy.databinding.ActivityMainBinding;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,9 +43,11 @@ public class MainActivity extends AppCompatActivity {
     private ImageView degreeImageView;
     private TextView locationTextView;
     private TextView timeTextView;
-    private TextView temperatureTextView;
-    private TextView humidityTextView;
-    private TextView precipitationTextView;
+    private TextView temperatureValue;
+    private TextView humidityLabel;
+    private TextView humidityValue;
+    private TextView precipitationLabel;
+    private TextView precipitationValue;
     private Button mississaugaButton;
     private Button waterlooButton;
     private Button ottawaButton;
@@ -73,9 +73,11 @@ public class MainActivity extends AppCompatActivity {
         iconImageView = findViewById( R.id.iconImageView );
         degreeImageView = findViewById( R.id.degreeImageView );
         timeTextView = findViewById( R.id.timeValue );
-        temperatureTextView = findViewById( R.id.temperatureValue );
-        humidityTextView = findViewById( R.id.humidityValue );
-        precipitationTextView = findViewById( R.id.precipValue);
+        temperatureValue = findViewById( R.id.temperatureValue );
+        humidityLabel = findViewById( R.id.humidityLabel );
+        humidityValue = findViewById( R.id.humidityValue );
+        precipitationLabel = findViewById( R.id.precipLabel );
+        precipitationValue = findViewById( R.id.precipValue);
         mississaugaButton = findViewById( R.id.mississaugaButton );
         waterlooButton = findViewById( R.id.waterlooButton );
         ottawaButton = findViewById( R.id.ottawaButton );
@@ -86,9 +88,11 @@ public class MainActivity extends AppCompatActivity {
         // Avoids default text from being displayed during the API call
         degreeImageView.setVisibility( View.INVISIBLE );
         timeTextView.setVisibility( View.INVISIBLE );
-        temperatureTextView.setVisibility( View.INVISIBLE );
-        humidityTextView.setVisibility( View.INVISIBLE );
-        precipitationTextView.setVisibility( View.INVISIBLE );
+        temperatureValue.setVisibility( View.INVISIBLE );
+        humidityLabel.setVisibility( View.INVISIBLE );
+        humidityValue.setVisibility( View.INVISIBLE );
+        precipitationLabel.setVisibility( View.INVISIBLE );
+        precipitationValue.setVisibility( View.INVISIBLE );
         getWindow().setStatusBarColor( getResources().getColor( R.color.black ) );
 
         String apiKEY = "f5826972faf15ce3b0d0fb1101ac945c";
@@ -138,9 +142,11 @@ public class MainActivity extends AppCompatActivity {
                                     iconImageView.setImageDrawable( getResources().getDrawable( displayWeather.getIconId() ) );
                                     degreeImageView.setVisibility( View.VISIBLE );
                                     timeTextView.setVisibility( View.VISIBLE );
-                                    temperatureTextView.setVisibility( View.VISIBLE );
-                                    humidityTextView.setVisibility( View.VISIBLE );
-                                    precipitationTextView.setVisibility( View.VISIBLE );
+                                    temperatureValue.setVisibility( View.VISIBLE );
+                                    humidityLabel.setVisibility( View.VISIBLE );
+                                    humidityValue.setVisibility( View.VISIBLE );
+                                    precipitationLabel.setVisibility( View.VISIBLE );
+                                    precipitationValue.setVisibility( View.VISIBLE );
                                     setWeatherColor();
                                 }
                             } );
