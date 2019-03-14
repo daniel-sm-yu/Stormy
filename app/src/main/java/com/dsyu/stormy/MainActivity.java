@@ -1,9 +1,13 @@
 package com.dsyu.stormy;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
@@ -27,18 +31,28 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static com.dsyu.stormy.R.layout.activity_main;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
     private CurrentWeather currentWeather;
     private Locations locations = new Locations();
 
+    private ConstraintLayout layout;
     private ImageView iconImageView;
+    private ImageView degreeImageView;
     private TextView locationTextView;
     private TextView timeTextView;
     private TextView temperatureTextView;
     private TextView humidityTextView;
     private TextView precipitationTextView;
+    private Button mississaugaButton;
+    private Button waterlooButton;
+    private Button ottawaButton;
+    private Button montrealButton;
+    private Button losAngelesButton;
+    private Button dalianButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,24 +60,35 @@ public class MainActivity extends AppCompatActivity {
         getForecast(locations.getMississaugaLatitude(), locations.getMississaugaLongitude(), "Mississauga");
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void getForecast(double latitude, double longitude, final String city) {
-        final ActivityMainBinding binding = DataBindingUtil.setContentView( MainActivity.this, R.layout.activity_main );
+        final ActivityMainBinding binding = DataBindingUtil.setContentView( MainActivity.this, activity_main );
 
         TextView darkSky = findViewById( R.id.darkSkyAttribution );
         darkSky.setMovementMethod( LinkMovementMethod.getInstance() );
 
+        layout= findViewById( R.id.layout );
         locationTextView = findViewById( R.id.locationTextView );
         iconImageView = findViewById( R.id.iconImageView );
+        degreeImageView = findViewById( R.id.degreeImageView );
         timeTextView = findViewById( R.id.timeValue );
         temperatureTextView = findViewById( R.id.temperatureValue );
         humidityTextView = findViewById( R.id.humidityValue );
         precipitationTextView = findViewById( R.id.precipValue);
+        mississaugaButton = findViewById( R.id.mississaugaButton );
+        waterlooButton = findViewById( R.id.waterlooButton );
+        ottawaButton = findViewById( R.id.ottawaButton );
+        montrealButton = findViewById( R.id.montrealButton );
+        losAngelesButton = findViewById( R.id.losAngelesButton );
+        dalianButton = findViewById( R.id.dalianButton );
 
+        // Avoids default text from being displayed during the API call
+        degreeImageView.setVisibility( View.INVISIBLE );
         timeTextView.setVisibility( View.INVISIBLE );
         temperatureTextView.setVisibility( View.INVISIBLE );
         humidityTextView.setVisibility( View.INVISIBLE );
         precipitationTextView.setVisibility( View.INVISIBLE );
-
+        getWindow().setStatusBarColor( getResources().getColor( R.color.black ) );
 
         String apiKEY = "9f1b5bba01b440c97205eb1ec559be48";
 
@@ -102,16 +127,18 @@ public class MainActivity extends AppCompatActivity {
 
                             binding.setWeather( displayWeather );
 
-                            // runs the following code on the main thread, other threads can not change the UI
+                            // Runs the following code on the main thread, other threads can not change the UI
                             runOnUiThread( new Runnable() {
                                 @Override
                                 public void run() {
                                     locationTextView.setText( city );
                                     iconImageView.setImageDrawable( getResources().getDrawable( displayWeather.getIconId() ) );
+                                    degreeImageView.setVisibility( View.VISIBLE );
                                     timeTextView.setVisibility( View.VISIBLE );
                                     temperatureTextView.setVisibility( View.VISIBLE );
                                     humidityTextView.setVisibility( View.VISIBLE );
                                     precipitationTextView.setVisibility( View.VISIBLE );
+                                    setWeatherColor();
                                 }
                             } );
 
@@ -165,6 +192,30 @@ public class MainActivity extends AppCompatActivity {
     private void alertUserAboutError() {
         AlertDialogFragment dialog = new AlertDialogFragment();
         dialog.show(getSupportFragmentManager(), "error_dialog");
+    }
+
+    private void setWeatherColor() {
+        if (currentWeather.getHour() < 7 || currentWeather.getHour() > 18) {
+            changeColors( getResources().getColor( R.color.night ) );
+        }
+        else if (currentWeather.getIcon().equals("clear-day") || currentWeather.getIcon().equals("clear-night") || currentWeather.getIcon().equals("wind")) {
+            changeColors( getResources().getColor( R.color.clear ) );
+        }
+        else {
+            changeColors( getResources().getColor( R.color.stormy ) );
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void changeColors(int color) {
+        layout.setBackgroundColor(color);
+        mississaugaButton.setTextColor( color );
+        waterlooButton.setTextColor( color );
+        ottawaButton.setTextColor( color );
+        montrealButton.setTextColor( color );
+        losAngelesButton.setTextColor( color );
+        dalianButton.setTextColor( color );
+        getWindow().setStatusBarColor( color );
     }
 
     public void mississauga(View view) {

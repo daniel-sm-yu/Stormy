@@ -1,12 +1,8 @@
 package com.dsyu.stormy;
 
-import android.util.Log;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
-
-import static com.dsyu.stormy.MainActivity.TAG;
 
 public class CurrentWeather {
 
@@ -88,6 +84,13 @@ public class CurrentWeather {
         formatter.setTimeZone( TimeZone.getTimeZone( timeZone ) );
         Date dateTime = new Date(time * 1000);
         return formatter.format( dateTime );
+    }
+
+    public Integer getHour() {
+        SimpleDateFormat formatter = new SimpleDateFormat( "kk" );
+        formatter.setTimeZone( TimeZone.getTimeZone( timeZone ) );
+        Date dateTime = new Date(time * 1000);
+        return Integer.valueOf( formatter.format( dateTime ) );
     }
 
     public void setTime(long time) {
