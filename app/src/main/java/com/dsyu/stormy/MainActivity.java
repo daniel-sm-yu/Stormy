@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         precipitationValue.setVisibility( View.INVISIBLE );
         getWindow().setStatusBarColor( getResources().getColor( R.color.black ) );
 
-        String apiKEY = "9f1b5bba01b440c97205eb1ec559be48";
+        String apiKEY = BuildConfig.stormy_key;
 
         String forecastURL = "https://api.darksky.net/forecast/" + apiKEY + "/" + latitude + "," + longitude;
 
