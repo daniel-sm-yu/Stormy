@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
-        getForecast(locations.getMississaugaLatitude(), locations.getMississaugaLongitude(), "Mississauga");
+        getForecast(locations.getWaterlooLatitude(), locations.getWaterlooLongitude(), "Waterloo");
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
         currentWeather.setSunSetTime( dailyData.getLong( "sunsetTime" ) );
         currentWeather.setIcon( currently.getString( "icon" ) );
         currentWeather.setPrecipChance( currently.getDouble( "precipProbability" ) );
-        currentWeather.setTemperature( currently.getDouble( "temperature" ) );
+        currentWeather.setTemperature( currently.getDouble( "apparentTemperature" ) );
 
         // Gets minutely summary for Canadian cities and hourly summary for other cities
         if (forecast.has( "minutely" ) && forecast.getDouble( "latitude" ) != 34.0522) {
